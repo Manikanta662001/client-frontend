@@ -1,0 +1,145 @@
+import React, { useEffect, useState } from "react";
+import { useUserContext } from "../../../context/AuthContext";
+import {
+  Box,
+  IconButton,
+  useMediaQuery,
+  useTheme,
+  InputBase,
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import FlexBetween from "../../../components/FlexBetween";
+import { Search } from "@mui/icons-material";
+import CircularProgress from "@mui/material/CircularProgress";
+import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
+import ChatUserWidget from "./ChatUserWidget";
+import { getUserFriends } from "../../../utils/utils";
+import "./ChatSideBar.scss";
+
+const ChatSideBar = (props) => {
+  const {
+    setSelectedChatUser,
+    allChatFriends,
+    setAllChatFriends,
+    chatFriends,
+    setChatFriends,
+  } = props;
+  const { user, setUser, socket } = useUserContext();
+  const isNonMobileScreens = useMediaQuery("(min-width: 900px)");
+  const [loading, setLoading] = useState(true);
+  const [searchedUser, setSearchedUser] = useState("");
+  const navigate = useNavigate();
+  const theme = useTheme();
+  const neutralLight = theme.palette.neutral.light;
+  const dark = theme.palette.neutral.dark;
+  const background = theme.palette.background.default;
+  const primaryLight = theme.palette.primary.light;
+  const alt = theme.palette.background.alt;
+  socket.off("msgCount").on("msgCount", ({ from, receipientUser }) => {
+    if (user._id === from) {
+      setUser((prevUser) => ({
+        ...prevUser,
+        messageCount: receipientUser.messageCount,
+      }));
+    }
+    const allFriends = chatFriends.map((item) => {
+      if (item._id === receipientUser._id) {
+        return receipientUser;
+      }
+      return item;
+    });
+    setChatFriends(allFriends);
+  });
+  socket
+    .off("updateLastSeen")
+    .on("updateLastSeen", ({ id, receipientUser }) => {
+      if (user._id === id) {
+        setUser((prevUser) => ({
+          ...prevUser,
+          messageCount: receipientUser.lastSeen,
+        }));
+      }
+      const allFriends = chatFriends.map((item) => {
+        if (item._id === receipientUser._id) {
+          return receipientUser;
+        }
+        return item;
+      });
+      setChatFriends(allFriends);
+    });
+
+  socket.off("changeStatus").on("changeStatus", ({ updatedUser }) => {
+    const allFriends = chatFriends.map((item) => {
+      if (item._id === updatedUser._id) {
+        return updatedUser;
+      }
+      return item;
+    });
+    setChatFriends(allFriends);
+  });
+  useEffect(() => {
+    const friendsFn = async () => {
+      const result = await getUserFriends(user._id);
+      setChatFriends(result);
+      setAllChatFriends(result);
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      setLoading(false);
+    };
+    friendsFn();
+  }, [user?._id]);
+  return (
+    <>
+      {loading ? (
+        <Box textAlign={"center"} position={"relative"} top={"50%"}>
+          <CircularProgress color="success" />
+        </Box>
+      ) : (
+        <>
+          <FlexBetween borderBottom={"1px solid lightgrey"}>
+            <Box padding={"8px 5px"} width={"100%"}>
+              <FlexBetween
+                backgroundColor={neutralLight}
+                borderRadius="9px"
+                gap="2rem"
+                padding="0.1rem 1.5rem"
+              >
+                <IconButton>
+                  <Search />
+                </IconButton>
+                <InputBase
+                  placeholder="Search..."
+                  fullWidth
+                  value={searchedUser}
+                  onChange={(e) => setSearchedUser(e.target.value)}
+                />
+              </FlexBetween>
+            </Box>
+          </FlexBetween>
+
+          <Box
+            display={"flex"}
+            flexDirection={"column"}
+            className="chat-sidebar"
+          >
+            {chatFriends.length > 0 ? (
+              chatFriends.map((eachFriend, ind) => {
+                return (
+                  <ChatUserWidget
+                    key={"sidebar" + eachFriend.firstName}
+                    eachFriend={eachFriend}
+                    setSelectedChatUser={setSelectedChatUser}
+                    setSearchedUserText={setSearchedUser}
+                  />
+                );
+              })
+            ) : (
+              <p style={{ margin: "auto" }}>No Results</p>
+            )}
+          </Box>
+        </>
+      )}
+    </>
+  );
+};
+
+export default ChatSideBar;

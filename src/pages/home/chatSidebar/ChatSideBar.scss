@@ -1,0 +1,8 @@
+.chat-sidebar {
+  overflow: auto;
+  height: calc(100vh - 57px);
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+}

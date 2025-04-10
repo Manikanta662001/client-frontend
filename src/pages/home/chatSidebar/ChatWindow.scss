@@ -1,0 +1,128 @@
+.chat-body {
+  overflow: auto;
+  height: calc(100vh - 115px);
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+
+  > div {
+    margin: 10px 6px;
+    width: calc(50% - 100px);
+
+    p {
+      width: fit-content;
+      background-color: #fff;
+      border-radius: 5px;
+      color: #000;
+      padding: 6px 6px 18px;
+      position: relative;
+      min-width: 100px;
+
+      span {
+        position: absolute;
+        right: 9px;
+        bottom: 0px;
+        font-size: 12px;
+      }
+
+      img {
+        width: 300px;
+        height: 200px;
+      }
+
+      .file-name {
+        position: absolute;
+        left: 27px;
+        bottom: 4px;
+        font-size: 12px;
+      }
+
+      button {
+        position: absolute;
+        left: 3px;
+        bottom: 2px;
+        font-size: 4px;
+        padding: 0px;
+
+        &:hover {
+          background: lightgray;
+        }
+      }
+    }
+  }
+
+  > div.user-message {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    margin: 10px 0;
+    padding-right: 6px;
+
+    p {
+      margin-left: 50%;
+      background-color: #dbf8c6;
+    }
+  }
+
+  .down-arrow {
+    position: absolute;
+    background-color: aliceblue;
+    bottom: 5%;
+    right: 15px;
+    z-index: 10;
+
+    &:hover {
+      background-color: #dbf8c6;
+    }
+  }
+
+  .dots-loading-wrapper {
+    width: fit-content !important;
+    background: #dbf8c6 !important;
+    padding: 10px 10px !important;
+    border-radius: 5px;
+  }
+}
+
+.wrapper-div {
+  position: absolute;
+  top: calc(50% - 23.3px);
+  right: calc(50% - 240px);
+}
+
+.encrypt-txt-wrapper {
+  width: 100% !important;
+
+  > p {
+    background-color: #dbf8c6 !important;
+    text-align: center !important;
+    padding: 5px 10px !important;
+    width: 31% !important;
+    margin: auto !important;
+
+    .MuiSvgIcon-root {
+      font-size: small;
+    }
+  }
+}
+
+.loading-indicator {
+  text-align: center;
+  width: 100% !important;
+  position: relative;
+  top: 50%;
+}
+
+// Responsive
+@media screen and (max-width: 600px) {
+  .chat-body {
+    > div {
+      p {
+        img {
+          width: -webkit-fill-available;
+        }
+      }
+    }
+  }
+}
