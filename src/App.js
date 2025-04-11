@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import Header from "./components/header/Header";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
@@ -12,9 +12,10 @@ import ForgotPwd from "./pages/forgotPwd/ForgotPwd";
 import LandingPage from "./pages/landingPage/LandingPage";
 import { BE_URL } from "./utils/Constants";
 import { getTokenFromCookie, notification } from "./utils/utils";
+import PendingRequests from "./pages/pendingRequests/PendingRequests";
 
 function App() {
-  const { mode, setUser, setIsLoggedin } = useUserContext();
+  const { mode, setUser, isLoggedin, setIsLoggedin } = useUserContext();
   console.log("MODE:::", mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   const navigate = useNavigate();
@@ -52,7 +53,16 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Loginpage />} />
-          <Route path="/home" element={<Homepage />} />
+          <Route
+            path="/home"
+            element={isLoggedin ? <Homepage /> : <Navigate to={"/login"} />}
+          />
+          <Route
+            path="/requests"
+            element={
+              isLoggedin ? <PendingRequests /> : <Navigate to={"/login"} />
+            }
+          />
           <Route path="/forgotPwd" element={<ForgotPwd />} />
         </Routes>
       </ThemeProvider>

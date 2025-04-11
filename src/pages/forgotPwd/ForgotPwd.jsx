@@ -18,7 +18,7 @@ const ForgotPwd = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const { palette } = theme;
-  const isNonMobileScreens = useMediaQuery("(min-width:900px)");
+  const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const [vals, setVals] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({
     email: "",

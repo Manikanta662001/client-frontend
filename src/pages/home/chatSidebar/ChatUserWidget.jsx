@@ -10,7 +10,8 @@ const ChatUserWidget = ({
   setSelectedChatUser,
   setSearchedUserText,
 }) => {
-  const { _id, firstName, lastName, picturePath, lastSeen } = eachFriend;
+  const { _id, firstName, lastName, picturePath, lastSeen, status } =
+    eachFriend;
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const medium = palette.neutral.medium;
@@ -26,6 +27,7 @@ const ChatUserWidget = ({
       friendId: _id,
     });
   };
+  console.log('USER:::',user)
   return (
     <FlexBetween
       sx={{
@@ -39,7 +41,12 @@ const ChatUserWidget = ({
     >
       <FlexBetween width={"100%"}>
         <FlexBetween gap={"1.5rem"}>
-          <UserImage image={picturePath} size={"40px"} />
+          <UserImage
+            image={picturePath}
+            size={"40px"}
+            showDot={true}
+            status={status}
+          />
           <Box onClick={() => console.log("first")}>
             <Typography color={main} variant="h5" fontWeight={"500"}>
               {getFullName(eachFriend)}

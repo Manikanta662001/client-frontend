@@ -52,7 +52,8 @@ const loginInitialValues = {
 const Form = () => {
   const { palette } = useTheme();
   const navigate = useNavigate();
-  const { setUser, setIsLoggedin, pageType, setPageType } = useUserContext();
+  const { setUser, setIsLoggedin, pageType, setPageType, socket } =
+    useUserContext();
   const isNonMobileScreens = useMediaQuery("(min-width:600px)");
   const register = async (values, onSubmitProps) => {
     try {
@@ -87,6 +88,10 @@ const Form = () => {
         throw new Error(userData.error);
       }
       const { user, token, message } = userData;
+      socket.emit("changeStatus", {
+        userId: user._id,
+        status: "Online",
+      });
       notification(message, "");
       onSubmitProps.resetForm();
       setUser(user);

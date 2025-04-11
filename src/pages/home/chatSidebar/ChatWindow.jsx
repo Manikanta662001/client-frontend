@@ -37,7 +37,7 @@ const ChatWindow = ({
   setChatFriends,
   setSelectedChatUser,
 }) => {
-  const isNonMobileScreens = useMediaQuery("(min-width: 900px)");
+  const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const [messageText, setMessageText] = useState("");
   const [allMessages, setAllMessages] = useState([]);
   const [showArrowIcon, setShowArrowIcon] = useState(false);
@@ -272,7 +272,11 @@ const ChatWindow = ({
                     <KeyboardBackspaceIcon />
                   </IconButton>
                 )}
-                <UserImage image={selectedChatUser.picturePath} size={"40px"} />
+                <UserImage
+                  image={selectedChatUser.picturePath}
+                  size={"40px"}
+                  showDot={false}
+                />
                 <Box>
                   <Typography color={main} variant="h5" fontWeight={"500"}>
                     {getFullName(selectedChatUser)}

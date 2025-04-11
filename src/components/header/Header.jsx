@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Header.scss";
 import FlexBetween from "../FlexBetween";
 import {
+  Badge,
   Box,
   Button,
   IconButton,
@@ -11,6 +12,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { Close, DarkMode, LightMode, Menu } from "@mui/icons-material";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../context/AuthContext";
 import { setCookie, updatedMode } from "../../utils/utils";
@@ -64,7 +66,7 @@ const Header = () => {
         Chat App
       </Typography>
       {isNonMobileScreens ? (
-        <FlexBetween gap={"1rem"}>
+        <FlexBetween gap={"0.7rem"}>
           <IconButton onClick={() => setMode(updatedMode(mode))}>
             {theme.palette.mode === "dark" ? (
               <DarkMode sx={{ fontSize: "25px" }} />
@@ -91,9 +93,16 @@ const Header = () => {
             </>
           )}
           {isLoggedin && (
-            <Button variant="outlined" onClick={Logout}>
-              Logout
-            </Button>
+            <FlexBetween gap={"1rem"}>
+              <Button onClick={() => navigate("/requests")}>
+                <Badge badgeContent={4} color="secondary">
+                  <NotificationsIcon />
+                </Badge>
+              </Button>
+              <Button variant="outlined" onClick={Logout}>
+                Logout
+              </Button>
+            </FlexBetween>
           )}
         </FlexBetween>
       ) : (
@@ -127,7 +136,7 @@ const Header = () => {
             flexDirection="column"
             justifyContent="center"
             alignItems="center"
-            gap="1rem"
+            gap="0.7rem"
           >
             <IconButton
               onClick={() => setMode(updatedMode(mode))}
@@ -158,9 +167,22 @@ const Header = () => {
               </>
             )}
             {isLoggedin && (
-              <Button variant="outlined" onClick={Logout}>
-                Logout
-              </Button>
+              <FlexBetween
+                gap={"1rem"}
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Button onClick={() => navigate("/requests")}>
+                  <Badge badgeContent={4} color="secondary">
+                    <NotificationsIcon />
+                  </Badge>
+                </Button>
+                <Button variant="outlined" onClick={Logout}>
+                  Logout
+                </Button>
+              </FlexBetween>
             )}
           </FlexBetween>
         </Box>

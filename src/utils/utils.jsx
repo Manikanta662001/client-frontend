@@ -95,6 +95,18 @@ export const getUserFriends = async (userId) => {
   }
 };
 
+export const getAllUsers = async () => {
+  try {
+    const response = await fetch(BE_URL + `/users/getAllUsers`, {
+      headers: { Authorization: `Bearer ${getTokenFromCookie()}` },
+    });
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+
 export const generateRoomId = (user, selectedChatUser) => {
   let roomId;
   if (user._id > selectedChatUser._id) {

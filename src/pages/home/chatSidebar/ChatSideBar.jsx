@@ -13,7 +13,7 @@ import { Search } from "@mui/icons-material";
 import CircularProgress from "@mui/material/CircularProgress";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import ChatUserWidget from "./ChatUserWidget";
-import { getUserFriends } from "../../../utils/utils";
+import { getFullName, getUserFriends } from "../../../utils/utils";
 import "./ChatSideBar.scss";
 
 const ChatSideBar = (props) => {
@@ -77,6 +77,12 @@ const ChatSideBar = (props) => {
     });
     setChatFriends(allFriends);
   });
+  useEffect(() => {
+    const users = allChatFriends.filter((user) =>
+      getFullName(user).toLowerCase().includes(searchedUser.toLowerCase()),
+    );
+    setChatFriends(users);
+  }, [searchedUser]);
   useEffect(() => {
     const friendsFn = async () => {
       const result = await getUserFriends(user._id);

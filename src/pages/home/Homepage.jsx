@@ -9,6 +9,7 @@ const Homepage = () => {
   const [selectedChatUser, setSelectedChatUser] = useState(null);
   const [allChatFriends, setAllChatFriends] = useState([]);
   const [chatFriends, setChatFriends] = useState([]);
+  console.log('CHATFRIENDS:::',chatFriends)
   return (
     <Box
       width="100%"
