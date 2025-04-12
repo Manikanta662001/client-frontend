@@ -7,12 +7,6 @@
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -28,11 +22,18 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.green-tick {
+  border: 1px solid green;
+  border-radius: 100%;
+  padding: 5px;
+}
+.red-tick {
+  border: 1px solid red;
+  border-radius: 100%;
+  padding: 5px;
+}
+.green-tick:hover,
+.red-tick:hover {
+  cursor: pointer;
+  background-color: lightgray;
 }

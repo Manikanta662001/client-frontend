@@ -7,10 +7,14 @@ import ChatUserWidget from "../home/chatSidebar/ChatUserWidget";
 import ShowUsers from "./ShowUsers";
 import { useUserContext } from "../../context/AuthContext";
 
-const SendRequest = () => {
+const SendRequest = ({
+  allUsers,
+  setAllUsers,
+  showingUsers,
+  setShowingUsers,
+}) => {
   const [searchedUser, setSearchedUser] = useState("");
-  const [allUsers, setAllUsers] = useState([]);
-  const [showingUsers, setShowingUsers] = useState([]);
+
   const theme = useTheme();
   const { socket, user } = useUserContext();
   const neutralLight = theme.palette.neutral.light;
@@ -29,7 +33,7 @@ const SendRequest = () => {
           return u;
         }
       });
-      console.log("ALL::::1", updatedUsers,result);
+      console.log("ALL::::1", updatedUsers, result);
       setAllUsers(updatedUsers);
       setShowingUsers(updatedUsers);
     };

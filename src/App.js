@@ -12,7 +12,7 @@ import ForgotPwd from "./pages/forgotPwd/ForgotPwd";
 import LandingPage from "./pages/landingPage/LandingPage";
 import { BE_URL } from "./utils/Constants";
 import { getTokenFromCookie, notification } from "./utils/utils";
-import PendingRequests from "./pages/pendingRequests/PendingRequests";
+import Requestspage from "./pages/requests/Requestspage";
 
 function App() {
   const { mode, setUser, isLoggedin, setIsLoggedin } = useUserContext();
@@ -60,7 +60,7 @@ function App() {
           <Route
             path="/requests"
             element={
-              isLoggedin ? <PendingRequests /> : <Navigate to={"/login"} />
+              isLoggedin ? <Requestspage /> : <Navigate to={"/login"} />
             }
           />
           <Route path="/forgotPwd" element={<ForgotPwd />} />

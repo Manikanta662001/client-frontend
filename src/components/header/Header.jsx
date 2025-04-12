@@ -46,6 +46,7 @@ const Header = () => {
     setCookie("", 0);
     navigate("/login");
   };
+  const pendingRequestsLength = Object.keys(user?.pendingRequests || {}).length;
   return (
     <FlexBetween
       padding="0.5rem 4%"
@@ -95,7 +96,7 @@ const Header = () => {
           {isLoggedin && (
             <FlexBetween gap={"1rem"}>
               <Button onClick={() => navigate("/requests")}>
-                <Badge badgeContent={4} color="secondary">
+                <Badge badgeContent={pendingRequestsLength} color="secondary">
                   <NotificationsIcon />
                 </Badge>
               </Button>
@@ -175,7 +176,7 @@ const Header = () => {
                 alignItems="center"
               >
                 <Button onClick={() => navigate("/requests")}>
-                  <Badge badgeContent={4} color="secondary">
+                  <Badge badgeContent={pendingRequestsLength} color="secondary">
                     <NotificationsIcon />
                   </Badge>
                 </Button>

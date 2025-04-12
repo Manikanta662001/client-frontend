@@ -17,17 +17,21 @@ const ShowUsers = ({ eachUser }) => {
   const handleAddIconClick = () => {
     socket.emit("sendRequest", {
       userId: user._id,
-      userName:getFullName(eachUser),
+      userName: getFullName(user),
+      userImage: user.picturePath,
       friendId: _id,
       friendName: getFullName(eachUser),
+      friendImage: eachUser.picturePath,
     });
     notification("Request Sent Successfully", "");
   };
   socket
     .off("receiveSendRequest")
-    .on("receiveSendRequest", ({ updatedUser }) => {
+    .on("receiveSendRequest", ({ updatedUser, updatedToUser }) => {
       if (user._id === updatedUser._id) {
         setUser(updatedUser);
+      } else if (user._id === updatedToUser._id) {
+        setUser(updatedToUser);
       }
     });
   return (
@@ -48,7 +52,7 @@ const ShowUsers = ({ eachUser }) => {
         </FlexBetween>
         <FlexBetween>
           <IconButton onClick={handleAddIconClick} title="Add">
-            {user.pendingRequests[_id] ? (
+            {user.sendingRequests[_id] ? (
               <PersonRemoveIcon />
             ) : (
               <PersonAddAltIcon />
