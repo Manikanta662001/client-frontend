@@ -10,11 +10,16 @@ export const getpage = (type) => {
   return false;
 };
 
-export const notification = (sucessMsg, errMsg) => {
+export const notification = (sucessMsg, errMsg, infoMsg = "") => {
   if (sucessMsg) {
     return toast.success(sucessMsg, {
       position: "top-right",
       autoClose: 2000,
+    });
+  } else if (infoMsg) {
+    return toast.info(infoMsg, {
+      position: "top-right",
+      autoClose: 4000,
     });
   } else {
     toast.error(errMsg, {

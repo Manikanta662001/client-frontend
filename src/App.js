@@ -7,12 +7,13 @@ import { useEffect, useMemo, useRef } from "react";
 import { useUserContext } from "./context/AuthContext";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import Loginpage from "./pages/login/Loginpage";
-import Homepage from "./pages/home/Homepage";
+
 import ForgotPwd from "./pages/forgotPwd/ForgotPwd";
 import LandingPage from "./pages/landingPage/LandingPage";
 import { BE_URL } from "./utils/Constants";
 import { getTokenFromCookie, notification } from "./utils/utils";
 import Requestspage from "./pages/requests/Requestspage";
+import Chatpage from "./pages/chat/Chatpage";
 
 function App() {
   const { mode, setUser, isLoggedin, setIsLoggedin } = useUserContext();
@@ -33,7 +34,7 @@ function App() {
       if (userData) {
         setUser(userData);
         setIsLoggedin(true);
-        navigate("/home");
+        navigate("/chat");
       }
     } catch (error) {
       notification("", error.message);
@@ -51,17 +52,21 @@ function App() {
         <CssBaseline />
         <Header />
         <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<Loginpage />} />
           <Route
-            path="/home"
-            element={isLoggedin ? <Homepage /> : <Navigate to={"/login"} />}
+            path="/"
+            element={isLoggedin ? <Navigate to={"/chat"} /> : <LandingPage />}
+          />
+          <Route
+            path="/login"
+            element={isLoggedin ? <Navigate to={"/chat"} /> : <Loginpage />}
+          />
+          <Route
+            path="/chat"
+            element={isLoggedin ? <Chatpage /> : <Navigate to={"/login"} />}
           />
           <Route
             path="/requests"
-            element={
-              isLoggedin ? <Requestspage /> : <Navigate to={"/login"} />
-            }
+            element={isLoggedin ? <Requestspage /> : <Navigate to={"/login"} />}
           />
           <Route path="/forgotPwd" element={<ForgotPwd />} />
         </Routes>

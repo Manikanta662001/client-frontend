@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import "./Homepage.scss";
+import "./Chatpage.scss";
 import { Box, useMediaQuery } from "@mui/material";
 import ChatSideBar from "./chatSidebar/ChatSideBar";
 import ChatWindow from "./chatSidebar/ChatWindow";
 
-const Homepage = () => {
+const Chatpage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const [selectedChatUser, setSelectedChatUser] = useState(null);
   const [allChatFriends, setAllChatFriends] = useState([]);
@@ -46,4 +46,4 @@ const Homepage = () => {
   );
 };
 
-export default Homepage;
+export default Chatpage;

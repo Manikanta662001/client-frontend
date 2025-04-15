@@ -50,18 +50,6 @@ const ShowRequests = ({
       userId: user._id,
       friendId: id,
     });
-    // const updatedAllUsers = allUsers.filter((u) => {
-    //   if (u._id !== user?._id) {
-    //     return u;
-    //   }
-    // });
-    // const updatedUsers = showingUsers.filter((u) => {
-    //   if (u._id !== user?._id) {
-    //     return u;
-    //   }
-    // });
-    // setAllUsers(updatedAllUsers);
-    // setShowingUsers(updatedUsers);
   };
   return (
     <div>

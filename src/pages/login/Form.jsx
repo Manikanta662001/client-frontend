@@ -97,7 +97,7 @@ const Form = () => {
       setUser(user);
       setIsLoggedin(true);
       setCookie(token, 2);
-      navigate("/home");
+      navigate("/chat");
     } catch (error) {
       notification("", error.message);
       console.error("ERR::::", error.message);

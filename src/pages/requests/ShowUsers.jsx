@@ -8,7 +8,7 @@ import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 import { useUserContext } from "../../context/AuthContext";
 
-const ShowUsers = ({ eachUser }) => {
+const ShowUsers = ({ eachUser, handleRemoveUser }) => {
   const { _id, picturePath, status } = eachUser;
   const { palette } = useTheme();
   const { socket, user, setUser } = useUserContext();
@@ -27,13 +27,20 @@ const ShowUsers = ({ eachUser }) => {
   };
   socket
     .off("receiveSendRequest")
-    .on("receiveSendRequest", ({ updatedUser, updatedToUser }) => {
-      if (user._id === updatedUser._id) {
-        setUser(updatedUser);
-      } else if (user._id === updatedToUser._id) {
-        setUser(updatedToUser);
+    .on(
+      "receiveSendRequest",
+      ({ updatedUser, updatedToUser, message = "", type }) => {
+        if (user._id === updatedUser._id) {
+          setUser(updatedUser);
+          message && notification("", "", message);
+        } else if (user._id === updatedToUser._id) {
+          setUser(updatedToUser);
+        }
+        if (message === "" && type === "accept") {
+          handleRemoveUser(updatedUser, updatedToUser);
+        }
       }
-    });
+    );
   return (
     <FlexBetween padding={"10px"} borderBottom={`1px solid ${neutralLight}`}>
       <FlexBetween width={"100%"}>

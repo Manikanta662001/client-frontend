@@ -1,7 +1,7 @@
 import { Box, IconButton, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import DownloadIcon from "@mui/icons-material/Download";
-import "../pages/home/chatSidebar/ChatWindow.scss";
+import "../pages/chat/chatSidebar/ChatWindow.scss";
 import { getImageFromDb } from "../utils/utils";
 
 const ChatImage = ({ currentUser, singleMessage }) => {
